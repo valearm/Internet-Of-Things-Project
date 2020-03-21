@@ -3,8 +3,9 @@ DARIO DI SALVO 10687968
 
 Project Report:
 
-Starting from a clear folder, we have defined the message structure that is in “HomeChallenge.h”. Moreover, the payload of our message is composed of: “counter” and “sender_id”, both are unsigned integer of 16byte. After that, we have identified the used interfaces, wired them to components writing the “HomeChallenge1AppC.nc” file. Here is important to underline that we have defined 3 different timer called: “Timer1”, “Timer2”, “Timer3” respectively. 
-In the end, we have written the logic in “HomeChallenge1C.nc” and we have used the following strategy:
+Starting from a clear folder, we have defined the message structure that is in “HomeChallenge.h”. Moreover, the payload of our message is composed of: “counter” and “sender_id”, both are unsigned integer of 16byte. After that, we have identified the used interfaces, wired them to components writing the “HomeChallenge1AppC.nc” file.
+Here is important to underline that we have defined 3 different timer called: “Timer1”, “Timer2”, “Timer3” respectively. We also include the sender component AMSenderC, and the receiver component AMReceiverC. 
+In the end, we have written the logic in “HomeChallenge1C.nc” and we have used the following strategy
 At the boot, three simultaneous timers start at different frequency: Timer3= 1Hz,Timer2= 3Hz and Timer1= 5Hz.
 In “Timer1.Fired()” we check, through the if statement “if(TOS_NODE_ID==3)”, if the timer1 is fired in the Mote3 and if so then a broadcast message from mote 3 to the others is sent. The same is done for the others function “Timer2.Fired()” and “Timer3.Fired()” for mote 2 and mote 1 respectively. 
 When a message is received, we check if “counter mod 10 == 0”, if so we set to off all leds of the mode, otherwise we check which is the sender and toogle the related led specified by the challenge specification.
