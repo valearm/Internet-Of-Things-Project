@@ -118,13 +118,13 @@ module HomeChallenge1C @safe() {
       	call Leds.led2Off();
       }else{
       	if(rcm->sender_id == 1){
-      		//call Leds.led0Toggle(); //led rosso
+      		call Leds.led0Toggle(); //led rosso
       	}
       	if(rcm->sender_id == 2){
-      		//call Leds.led1Toggle(); 
+      		call Leds.led1Toggle(); 
       	}      	
       	if(rcm->sender_id == 3){
-      		//call Leds.led2Toggle(); 
+      		call Leds.led2Toggle(); 
       	}
       }
       return bufPtr;
