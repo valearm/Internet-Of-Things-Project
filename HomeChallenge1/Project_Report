@@ -9,3 +9,6 @@ In the end, we have written the logic in “HomeChallenge1C.nc” and we have us
 At the boot, three simultaneous timers start at different frequency: Timer3= 1Hz,Timer2= 3Hz and Timer1= 5Hz.
 In “Timer1.Fired()” we check, through the if statement “if(TOS_NODE_ID==3)”, if the timer1 is fired in the Mote3 and if so then a broadcast message from mote 3 to the others is sent. The same is done for the others function “Timer2.Fired()” and “Timer3.Fired()” for mote 2 and mote 1 respectively. 
 When a message is received, we check if “counter mod 10 == 0”, if so we set to off all leds of the mode, otherwise we check which is the sender and toogle the related led specified by the challenge specification.
+
+
+GitHub repository link: https://github.com/valearm/IoT
