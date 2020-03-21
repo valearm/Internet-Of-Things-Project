@@ -85,7 +85,7 @@ module HomeChallenge1C @safe() {
     }
   }
 	
-	  event void Timer3.fired() {
+ event void Timer3.fired() {
 
     if (locked) {
       return;
