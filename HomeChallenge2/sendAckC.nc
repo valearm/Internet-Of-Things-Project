@@ -19,6 +19,7 @@ module sendAckC {
     interface SplitControl;
 	//interface for timer
 	interface Timer<TMilli> as MilliTimer;
+	interface Timer<TMilli> as StopTimer1;
     //other interfaces, if needed
 	interface Packet;
     interface AMSend;
@@ -109,6 +110,7 @@ module sendAckC {
            call MilliTimer.startPeriodic( 1000 );
            dbg("timer", "Timer of mote %u is started!\n", TOS_NODE_ID);
   		}
+     
     }
     else{
 	//dbg for error
@@ -119,7 +121,14 @@ module sendAckC {
   
   event void SplitControl.stopDone(error_t err){
     /* Fill it ... */
+    dbg("timer","Mote %u Stopped\n",TOS_NODE_ID);
+    
   }
+  
+  event void StopTimer1.fired(){
+   call SplitControl.stop();
+  }
+
 
   //***************** MilliTimer interface ********************//
   event void MilliTimer.fired() {
@@ -153,8 +162,12 @@ module sendAckC {
       	dbg("radio_send", "ACK is received\n");
       	if(TOS_NODE_ID == 1){
       		call MilliTimer.stop();
-      		dbg("timer", "Timer stopped\n");
+      		dbg("timer", "timer stopped\n");
       	}
+      	if(TOS_NODE_ID ==2) {
+      	 call SplitControl.stop();
+      	}
+      	
       }else{
       	dbg("radio", "ACK is not received\n");
       }
@@ -187,6 +200,11 @@ module sendAckC {
       dbg_clear("radio_pack", "\t\t type: %hhu \n ", mess->msg_type);
 	  dbg_clear("radio_pack", "\t\t value: %hhu \n", mess->value);
 	  dbg_clear("radio_pack", "\t\t counter: %hhu \n", mess->msg_counter);
+	 
+	 if(mess->msg_type == 2){
+	 	call StopTimer1.startOneShot(250); //Timer used for stop radio of mote1 when receives RESP message
+	 }
+	 
      if(mess->msg_type== 1){
      	counter= mess->msg_counter;
      	rec_id= 2;
@@ -239,3 +257,4 @@ module sendAckC {
 	 
 	}						
 }
+
